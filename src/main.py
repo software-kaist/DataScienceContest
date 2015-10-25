@@ -147,8 +147,8 @@ if __name__ == '__main__':
     학습 
     '''
     docList=[]; classList = [];
-    #recall_2014_file = open("../new_rcl_out_14.txt", "r", encoding='utf8')
-    recall_2014_file = open("../test_set.txt", "r", encoding='utf8')
+    recall_2014_file = open("../new_rcl_out_14.txt", "r", encoding='utf8')
+    #recall_2014_file = open("../test_set.txt", "r", encoding='utf8')
     for line in recall_2014_file:
         line = line.strip()
         wordList = textParse(line)
