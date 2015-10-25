@@ -26,6 +26,72 @@ def createVocabList(dataSet):
     vocabSet.remove("etc")
     return list(vocabSet)
 
+def whiteVocabList():
+    vocabSet = set([])  #create empty set 중복 허용 안함!!
+    vocabSet.add("replace")
+    vocabSet.add("replaced")
+    vocabSet.add("replacement")
+    vocabSet.add("steering")
+    vocabSet.add("gears")
+    vocabSet.add("telescopic")
+    vocabSet.add("escort")
+    vocabSet.add("abs")
+    vocabSet.add("cabs")
+    vocabSet.add("escalade")
+    vocabSet.add("automatic")
+    vocabSet.add("automatically")
+    vocabSet.add("inspect")
+    vocabSet.add("inspection")
+    vocabSet.add("inspections")
+    vocabSet.add("inspecting")
+    vocabSet.add("inspected")
+    vocabSet.add("units")
+    vocabSet.add("unit")
+    vocabSet.add("bolts")
+    vocabSet.add("coolant")
+    vocabSet.add("lines")
+    vocabSet.add("line")
+    vocabSet.add("door")
+    vocabSet.add("software")
+    vocabSet.add("crack")
+    vocabSet.add("cracks")
+    vocabSet.add("cracking")
+    vocabSet.add("cracked")
+    vocabSet.add("insulation")
+    vocabSet.add("gunite")
+    vocabSet.add("insulation")
+    vocabSet.add("calibration")
+    vocabSet.add("absorber")
+    vocabSet.add("absorbers")
+    vocabSet.add("absorb")
+    vocabSet.add("ecu")
+    vocabSet.add("tpms")
+    vocabSet.add("absolute")
+    vocabSet.add("telescopic")
+    vocabSet.add("monitoring")
+    vocabSet.add("hecu")
+    vocabSet.add("absence")
+    vocabSet.add("remove")
+    vocabSet.add("overheated")
+    vocabSet.add("exhoust")
+    vocabSet.add("components")
+    vocabSet.add("component")
+    vocabSet.add("melt")
+    vocabSet.add("illuminates")
+    vocabSet.add("illuminate")
+    vocabSet.add("update")
+    vocabSet.add("updated")
+    vocabSet.add("absorption")
+    vocabSet.add("Tire pressure monitoring systems")
+    vocabSet.add("esc")
+    vocabSet.add("escape")
+    vocabSet.add("escapes")
+    vocabSet.add("upload")
+    vocabSet.add("rescue")
+    vocabSet.add("describing")
+
+    return list(vocabSet)
+
 # 단어별 빈도수 구하기
 def bagOfWords2VecMN(vocabList, inputSet):
     returnVec = [0]*len(vocabList)
@@ -39,8 +105,8 @@ def trainNB0(trainMatrix,trainCategory):
     numTrainDocs = len(trainMatrix)
     numWords = len(trainMatrix[0])
 #     print(numTrainDocs, numWords)
-    #print(sum(trainCategory))
-    #pAbusive = sum(trainCategory)/float(numTrainDocs)
+#     print(sum(trainCategory))
+#     pAbusive = sum(trainCategory)/float(numTrainDocs)
     p0Num = ones(numWords); p1Num = ones(numWords)      #change to ones() 
 #     print(p0Num, len(p0Num))
 #     print(p1Num, len(p1Num))
@@ -69,7 +135,7 @@ def classifyNB(vec2Classify, p0Vec, p1Vec, pClass1):
     p1 = sum(vec2Classify * p1Vec) + log(pClass1)    #element-wise mult
     p0 = sum(vec2Classify * p0Vec) + log(1.0 - pClass1)
     
-    print(p1, p0)
+    #print(p1, p0)
     if p1 > p0:
         return "hwt"
     else: 
@@ -81,24 +147,25 @@ if __name__ == '__main__':
     학습 
     '''
     docList=[]; classList = [];
-    recall_2014_file = open("../new_rcl_out_14.txt", "r", encoding='utf8')
-    # recall_2014_file = open("../test_set.txt", "r", encoding='utf8')
+    #recall_2014_file = open("../new_rcl_out_14.txt", "r", encoding='utf8')
+    recall_2014_file = open("../test_set.txt", "r", encoding='utf8')
     for line in recall_2014_file:
         line = line.strip()
         wordList = textParse(line)
         docList.append(wordList)
         
     # 중복 제거하여 단어 리스트 만듬
-    vocabList = createVocabList(docList)
+    #vocabList = createVocabList(docList)
+    vocabList = whiteVocabList()
+    print(vocabList)
     
     trainMat=[]; trainClasses = []
     for docIndex in range(len(docList)):
         # 등장 빈도 수 체크 vocabList trainMat 같은 인덱스로 묶임!!
         trainMat.append(bagOfWords2VecMN(vocabList, docList[docIndex]))
         trainClasses.append(docList[docIndex][0])
-    #     print(vocabList)
-    #     print(trainMat[docIndex])
-        #trainClasses.append(classList[docIndex])
+#         print(trainMat[docIndex])
+#         print(trainClasses)
         
     # 학습된 테이블
     p0V,p1V,pSpam = trainNB0((trainMat), (trainClasses))
@@ -125,7 +192,7 @@ if __name__ == '__main__':
             print ("classification error", testDocList[i][0], predic)
         else:
             print ("classification OK", testDocList[i][0], predic)
-            
+             
     print(error_cnt, error_cnt/len(testDocList))
     # print(len(docList))
     # print(vocabList)
