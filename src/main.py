@@ -28,16 +28,22 @@ def createVocabList(dataSet):
 
 def whiteVocabList():
     vocabSet = set([])  #create empty set 중복 허용 안함!!
+    vocabSet.add("refresh")
+    vocabSet.add("reprogramming")
+    vocabSet.add("reprogrammed")
+    vocabSet.add("reprogram")
+    vocabSet.add("repair")
+    vocabSet.add("repairs")
     vocabSet.add("replace")
     vocabSet.add("replaced")
     vocabSet.add("replacement")
     vocabSet.add("steering")
     vocabSet.add("gears")
-    vocabSet.add("telescopic")
-    vocabSet.add("escort")
-    vocabSet.add("abs")
-    vocabSet.add("cabs")
-    vocabSet.add("escalade")
+#     vocabSet.add("telescopic")
+#     vocabSet.add("escort")
+#     vocabSet.add("abs")
+#     vocabSet.add("cabs")
+#     vocabSet.add("escalade")
     vocabSet.add("automatic")
     vocabSet.add("automatically")
     vocabSet.add("inspect")
@@ -64,12 +70,11 @@ def whiteVocabList():
     vocabSet.add("absorber")
     vocabSet.add("absorbers")
     vocabSet.add("absorb")
-    vocabSet.add("ecu")
-    vocabSet.add("tpms")
+#     vocabSet.add("ecu")
+#     vocabSet.add("tpms")
     vocabSet.add("absolute")
-    vocabSet.add("telescopic")
     vocabSet.add("monitoring")
-    vocabSet.add("hecu")
+#     vocabSet.add("hecu")
     vocabSet.add("absence")
     vocabSet.add("remove")
     vocabSet.add("overheated")
@@ -77,15 +82,17 @@ def whiteVocabList():
     vocabSet.add("components")
     vocabSet.add("component")
     vocabSet.add("melt")
-    vocabSet.add("illuminates")
-    vocabSet.add("illuminate")
+    vocabSet.add("attach")
+    vocabSet.add("attachment")
+#     vocabSet.add("illuminates")
+#     vocabSet.add("illuminate")
     vocabSet.add("update")
     vocabSet.add("updated")
     vocabSet.add("absorption")
-    vocabSet.add("Tire pressure monitoring systems")
-    vocabSet.add("esc")
-    vocabSet.add("escape")
-    vocabSet.add("escapes")
+#     vocabSet.add("Tire pressure monitoring systems")
+#     vocabSet.add("esc")
+#     vocabSet.add("escape")
+#     vocabSet.add("escapes")
     vocabSet.add("upload")
     vocabSet.add("rescue")
     vocabSet.add("describing")
@@ -135,7 +142,7 @@ def classifyNB(vec2Classify, p0Vec, p1Vec, pClass1):
     p1 = sum(vec2Classify * p1Vec) + log(pClass1)    #element-wise mult
     p0 = sum(vec2Classify * p0Vec) + log(1.0 - pClass1)
     
-    #print(p1, p0)
+#     print(p1, p0)
     if p1 > p0:
         return "hwt"
     else: 
@@ -187,6 +194,11 @@ if __name__ == '__main__':
     for i in range(len(testDocList)):
         wordVector = bagOfWords2VecMN(vocabList, testDocList[i])
         predic = classifyNB(wordVector,p0V,p1V,pSpam)
+#         if predic == "swt":
+#             error_cnt += 1
+#             print(testDocList[i])
+#             
+#     print("SWT CNT:", error_cnt)
         if predic != testDocList[i][0]:
             error_cnt += 1
             print ("classification error", testDocList[i][0], predic)
