@@ -28,16 +28,23 @@ def createVocabList(dataSet):
 
 def whiteVocabList():
     vocabSet = set([])  #create empty set 중복 허용 안함!!
+#     vocabSet.add("re")
+#     vocabSet.add("fresh")
+    vocabSet.add("reprogramming")
+    vocabSet.add("reprogrammed")
+    vocabSet.add("reprogram")
+    vocabSet.add("repair")
+    vocabSet.add("repairs")
     vocabSet.add("replace")
     vocabSet.add("replaced")
     vocabSet.add("replacement")
-    vocabSet.add("steering")
-    vocabSet.add("gears")
-    vocabSet.add("telescopic")
-    vocabSet.add("escort")
-    vocabSet.add("abs")
-    vocabSet.add("cabs")
-    vocabSet.add("escalade")
+#     vocabSet.add("steering")
+#     vocabSet.add("gears")
+#     vocabSet.add("telescopic")
+#     vocabSet.add("escort")
+#     vocabSet.add("abs")
+#     vocabSet.add("cabs")
+#     vocabSet.add("escalade")
     vocabSet.add("automatic")
     vocabSet.add("automatically")
     vocabSet.add("inspect")
@@ -45,50 +52,59 @@ def whiteVocabList():
     vocabSet.add("inspections")
     vocabSet.add("inspecting")
     vocabSet.add("inspected")
-    vocabSet.add("units")
-    vocabSet.add("unit")
-    vocabSet.add("bolts")
-    vocabSet.add("coolant")
-    vocabSet.add("lines")
-    vocabSet.add("line")
-    vocabSet.add("door")
+#     vocabSet.add("units")
+#     vocabSet.add("unit")
+#     vocabSet.add("bolts")
+#     vocabSet.add("coolant")
+#     vocabSet.add("lines")
+#     vocabSet.add("line")
+#     vocabSet.add("door")
     vocabSet.add("software")
     vocabSet.add("crack")
     vocabSet.add("cracks")
     vocabSet.add("cracking")
     vocabSet.add("cracked")
     vocabSet.add("insulation")
-    vocabSet.add("gunite")
-    vocabSet.add("insulation")
+#     vocabSet.add("gunite")
+#     vocabSet.add("insulation")
     vocabSet.add("calibration")
-    vocabSet.add("absorber")
-    vocabSet.add("absorbers")
-    vocabSet.add("absorb")
-    vocabSet.add("ecu")
-    vocabSet.add("tpms")
+#     vocabSet.add("absorber")
+#     vocabSet.add("absorbers")
+#     vocabSet.add("absorb")
+#     vocabSet.add("ecu")
+#     vocabSet.add("tpms")
     vocabSet.add("absolute")
-    vocabSet.add("telescopic")
     vocabSet.add("monitoring")
-    vocabSet.add("hecu")
-    vocabSet.add("absence")
+#     vocabSet.add("hecu")
+#     vocabSet.add("absence")
     vocabSet.add("remove")
     vocabSet.add("overheated")
-    vocabSet.add("exhoust")
-    vocabSet.add("components")
-    vocabSet.add("component")
-    vocabSet.add("melt")
-    vocabSet.add("illuminates")
-    vocabSet.add("illuminate")
+#     vocabSet.add("exhoust")
+#     vocabSet.add("components")
+#     vocabSet.add("component")
+#     vocabSet.add("melt")
+    vocabSet.add("attach")
+    vocabSet.add("attachment")
+    vocabSet.add("detaches")
+    vocabSet.add("detache")
+    vocabSet.add("detached")
+#     vocabSet.add("illuminates")
+#     vocabSet.add("illuminate")
     vocabSet.add("update")
     vocabSet.add("updated")
-    vocabSet.add("absorption")
-    vocabSet.add("Tire pressure monitoring systems")
-    vocabSet.add("esc")
-    vocabSet.add("escape")
-    vocabSet.add("escapes")
+#     vocabSet.add("absorption")
+#     vocabSet.add("Tire pressure monitoring systems")
+#     vocabSet.add("esc")
+#     vocabSet.add("escape")
+#     vocabSet.add("escapes")
     vocabSet.add("upload")
-    vocabSet.add("rescue")
-    vocabSet.add("describing")
+#     vocabSet.add("rescue")
+#     vocabSet.add("describing")
+#     vocabSet.add("harness")
+#     vocabSet.add("install")
+#     vocabSet.add("installed")
+    vocabSet.add("adaptive")
+#     vocabSet.add("cruise") 
 
     return list(vocabSet)
 
@@ -135,7 +151,7 @@ def classifyNB(vec2Classify, p0Vec, p1Vec, pClass1):
     p1 = sum(vec2Classify * p1Vec) + log(pClass1)    #element-wise mult
     p0 = sum(vec2Classify * p0Vec) + log(1.0 - pClass1)
     
-    #print(p1, p0)
+#     print(p1, p0)
     if p1 > p0:
         return "hwt"
     else: 
@@ -146,11 +162,12 @@ if __name__ == '__main__':
     '''
     학습 
     '''
-    docList=[]; classList = [];
+    docList=[]; classList = []; lineList = [];
     recall_2014_file = open("../new_rcl_out_14.txt", "r", encoding='utf8')
     #recall_2014_file = open("../test_set.txt", "r", encoding='utf8')
     for line in recall_2014_file:
         line = line.strip()
+        lineList.append(line)
         wordList = textParse(line)
         docList.append(wordList)
         
@@ -176,7 +193,7 @@ if __name__ == '__main__':
     ''' 
     테스트 할 파일  로딩
     '''
-    recall_2014_file_test = open("../new_rcl_out_14.txt", "r", encoding='utf8')
+    recall_2014_file_test = open("../new_rcl_out_15.txt", "r", encoding='utf8')
     #recall_2014_file_test = open("../test_set.txt", "r", encoding='utf8')
     for line in recall_2014_file_test:
         line = line.strip()
@@ -185,13 +202,21 @@ if __name__ == '__main__':
     
     error_cnt = 0
     for i in range(len(testDocList)):
+        if (testDocList[i][0] == "etc"):
+            continue
         wordVector = bagOfWords2VecMN(vocabList, testDocList[i])
         predic = classifyNB(wordVector,p0V,p1V,pSpam)
-        if predic != testDocList[i][0]:
+        if predic == "swt":
             error_cnt += 1
-            print ("classification error", testDocList[i][0], predic)
-        else:
-            print ("classification OK", testDocList[i][0], predic)
+            print(testDocList[i])
+               
+    print("SWT CNT:", error_cnt)
+#         if predic != testDocList[i][0]:
+#             error_cnt += 1
+#             print ("classification error", testDocList[i][0], predic)
+#             print (lineList[i])
+#         else:
+#             print ("classification OK", testDocList[i][0], predic)
              
     print(error_cnt, error_cnt/len(testDocList))
     # print(len(docList))
