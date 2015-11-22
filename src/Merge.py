@@ -33,7 +33,7 @@ for line in recall_2014_file:
             recall_2014_outfile.write(line)
             recall_2014_outfile.write("\n")
             break
-        
+
 #     if search_id == "":
 #         hw_file = open("../hardware.txt", "r")
 #         for hw_id in hw_file:
@@ -53,7 +53,9 @@ for line in recall_2014_file:
 #                 break
     
     if search_id == "":
-        line = "N " + line
+        line = "HWT " + line
+        recall_2014_outfile.write(line)
+        recall_2014_outfile.write("\n")
     
 #     recall_2014_outfile.write(line)
 #     recall_2014_outfile.write("\n")
