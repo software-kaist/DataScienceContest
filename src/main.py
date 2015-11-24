@@ -157,7 +157,6 @@ def whiteVocabList():
 #     vocabSet.add('software')
 #     vocabSet.add('update')
 #     vocabSet.add('dasm')
-    
 #     vocabSet.add('manifold')
 #     vocabSet.add('wesport')
 #     vocabSet.add('free')
@@ -165,63 +164,63 @@ def whiteVocabList():
 #     vocabSet.add('manifold')
     
 
-    # 1차 Contest Result
-#     vocabSet.add("refresh")
-#     vocabSet.add("reprogramming")
-#     vocabSet.add("reprogrammed")
-#     vocabSet.add("reprogram")
-#     vocabSet.add("repair")
-#     vocabSet.add("repairs")
-#     vocabSet.add("replace")
-#     vocabSet.add("replaced")
-#     vocabSet.add("replacement")
-#     vocabSet.add("steering")
-#     vocabSet.add("gears")
+#     # 1차 Contest Result
+# #     vocabSet.add("refresh")
+# #     vocabSet.add("reprogramming")
+# #     vocabSet.add("reprogrammed")
+# #     vocabSet.add("reprogram")
+# #     vocabSet.add("repair")
+# #     vocabSet.add("repairs") ##
+# #     vocabSet.add("replace") ##
+# #     vocabSet.add("replaced")
+# #     vocabSet.add("replacement")
+#     vocabSet.add("steering") ##
+# #     vocabSet.add("gears")
 # #     vocabSet.add("telescopic")
 # #     vocabSet.add("escort")
 # #     vocabSet.add("abs")
 # #     vocabSet.add("cabs")
 # #     vocabSet.add("escalade")
-#     vocabSet.add("automatic")
+#     vocabSet.add("automatic") ##
 #     vocabSet.add("automatically")
-#     vocabSet.add("inspect")
+#     vocabSet.add("inspect") ##
 #     vocabSet.add("inspection")
 #     vocabSet.add("inspections")
 #     vocabSet.add("inspecting")
 #     vocabSet.add("inspected")
-#     vocabSet.add("units")
+#     vocabSet.add("units") ##
 #     vocabSet.add("unit")
-#     vocabSet.add("bolts")
-#     vocabSet.add("coolant")
-#     vocabSet.add("lines")
-#     vocabSet.add("line")
-#     vocabSet.add("door")
+#     vocabSet.add("bolts") ##
+#     vocabSet.add("coolant") ##
+#     vocabSet.add("lines") ##
+#     vocabSet.add("line") ##
+#     vocabSet.add("door") ##
 #     vocabSet.add("software")
-#     vocabSet.add("crack")
+#     vocabSet.add("crack") ##
 #     vocabSet.add("cracks")
-#     vocabSet.add("cracking")
-#     vocabSet.add("cracked")
+#     vocabSet.add("cracking") ##
+#     vocabSet.add("cracked") ##
 #     vocabSet.add("insulation")
 #     vocabSet.add("gunite")
-#     vocabSet.add("insulation")
+#     vocabSet.add("insulation") ##
 #     vocabSet.add("calibration")
-#     vocabSet.add("absorber")
-#     vocabSet.add("absorbers")
-#     vocabSet.add("absorb")
+#     vocabSet.add("absorber") ##
+#     vocabSet.add("absorbers") ##
+#     vocabSet.add("absorb") ##
 # #     vocabSet.add("ecu")
 # #     vocabSet.add("tpms")
-#     vocabSet.add("absolute")
+#     vocabSet.add("absolute") ##
 #     vocabSet.add("monitoring")
 # #     vocabSet.add("hecu")
-#     vocabSet.add("absence")
-#     vocabSet.add("remove")
+#     vocabSet.add("absence") ##
+#     vocabSet.add("remove") ##
 #     vocabSet.add("overheated")
 #     vocabSet.add("exhoust")
-#     vocabSet.add("components")
+#     vocabSet.add("components") ##
 #     vocabSet.add("component")
-#     vocabSet.add("melt")
-#     vocabSet.add("attach")
-#     vocabSet.add("attachment")
+#     vocabSet.add("melt") ##
+#     vocabSet.add("attach") ##
+#     vocabSet.add("attachment") ##
 # #     vocabSet.add("illuminates")
 # #     vocabSet.add("illuminate")
 #     vocabSet.add("update")
@@ -336,6 +335,26 @@ if __name__ == '__main__':
 #         print(trainClasses)
      
     print(totCntList)
+    
+#     # 빈도수 낮은 것 삭제 ###################################################
+#     delList = []
+#     for i in range(len(totCntList)):
+#         if totCntList[i] <= 15:
+#             delList.append(vocabList[i])
+#             
+#     for item in delList:
+#         vocabList.remove(item)
+#         
+#     print(vocabList)
+#     print("VOCA CNT=%d" %(len(vocabList)))
+#             
+#     trainMat = []; totCntList = [0]*len(vocabList)
+#     for docIndex in range(len(docList)):
+#         trainMat.append(bagOfWords2VecMN_Tot(vocabList, docList[docIndex], totCntList))
+#         trainClasses.append(docList[docIndex][0])
+#      
+#     print(totCntList)
+#     ###############################################################
      
     # 학습된 테이블
     p0V,p1V,pSpam,p0Num,p1Num = trainNB0((trainMat), (trainClasses))
@@ -393,10 +412,10 @@ if __name__ == '__main__':
 #             else:
 #                 print ("hwt classification OK", testDocList[i][1], testDocList[i][0], predic)
             
-    print("SWT classification CNT=%d" %(predic_swt_cnt))
+    print("SW Recall classification CNT=%d" %(predic_swt_cnt))
     swt_recall = (swt_cnt - swt_error_cnt) / swt_cnt 
-    print("SWT Recall(True Positive Rate)=%f, FP=%d, SWT CNT=%d" %(swt_recall, swt_error_cnt, swt_cnt))
+    print("SW Recall(True Positive Rate)=%f, FP=%d, SW CNT=%d" %(swt_recall, swt_error_cnt, swt_cnt))
     hwt_recall = (hwt_cnt - hwt_error_cnt) / hwt_cnt 
-    print("HWT Recall(True Positive Rate)=%f, FP=%d, HWT CNT=%d" %(hwt_recall, hwt_error_cnt, hwt_cnt))
+    print("HW Recall(True Positive Rate)=%f, FP=%d, HW CNT=%d" %(hwt_recall, hwt_error_cnt, hwt_cnt))
     accuracy = ((swt_cnt - swt_error_cnt) + (hwt_cnt - hwt_error_cnt)) / (swt_cnt + hwt_cnt)
-    print("Accuray=%f" %(accuracy))
+    print("Accuracy=%f" %(accuracy))
